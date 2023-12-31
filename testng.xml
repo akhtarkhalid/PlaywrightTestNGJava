@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd"><suite name="All Test Suite"><test verbose="2" preserve-order="true" name="C:/Users/Dell/IdeaProjects/PlaywrightTestNGJava/src/test/java/org/aka/gameshop/tests/HomePageTest.java"><classes><class name="org.aka.gameshop.tests.HomePageTest"><methods><include name="ahomeTitleTest"/><include name="bhomeURLTest"/><include name="chomeSearchTest"/></methods></class></classes></test></suite>
