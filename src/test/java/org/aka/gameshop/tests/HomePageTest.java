@@ -1,5 +1,6 @@
 package org.aka.gameshop.tests;
 
+import org.aka.gameshop.appData.AppData;
 import org.aka.gameshop.base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -9,21 +10,21 @@ public class HomePageTest extends BaseTest {
 
 
     @Test
-    public void ahomeTitleTest(){
+    public void homeTitleTest(){
         String homePageTitle = homePage.getHomePageTitle();
         System.out.printf("Home page title is %s",homePageTitle );
-        Assert.assertTrue(homePageTitle.contains("Games Online in India"));
+        Assert.assertTrue(homePageTitle.contains(AppData.HOME_PAGE_TITLE));
     }
 
     @Test
-    public void bhomeURLTest(){
+    public void homeURLTest(){
         String homePageURL = homePage.getHomePageURL();
         System.out.printf("Home page url is %s",homePageURL );
-        Assert.assertEquals(homePageURL,"https://www.gamestheshop.com/");
+        Assert.assertEquals(homePageURL,prop.getProperty("url"));
     }
 
     @Test(dataProvider = "getSearchData" )
-    public void chomeSearchTest(String productName){
+    public void homeSearchTest(String productName){
         String searchResult = homePage.searchForProduct(productName);
         System.out.printf("Searching for product %s",searchResult );
         Assert.assertTrue(searchResult.contains(productName));

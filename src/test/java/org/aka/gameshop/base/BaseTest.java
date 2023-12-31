@@ -13,7 +13,7 @@ import java.util.Properties;
 public class BaseTest {
     PlaywrightFactory playFactory;
     Page page;
-    Properties prop;
+    protected Properties prop;
     protected HomePage homePage;
 
     @BeforeMethod
@@ -26,7 +26,8 @@ public class BaseTest {
 
     @AfterMethod
     public void tearDown(){
-        playFactory.tearBrowser();
+        page.context().browser().close();
+       // playFactory.tearBrowser();
     }
 
 

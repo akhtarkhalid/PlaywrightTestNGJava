@@ -41,18 +41,18 @@ public class PlaywrightFactory {
 
     }
 
-    public void tearBrowser() {
-        page.context().browser().close();
-    }
-
     public Properties rtEnvSetup(){
         try {
-            FileInputStream fi = new FileInputStream("src/test/resources/configuration/runtime.properties");
+            FileInputStream fi = new FileInputStream("./src/test/resources/configuration/runtime.properties");
             properties = new Properties();
             properties.load(fi);
         }catch(IOException propLoadExcepion){
             System.out.println(propLoadExcepion.getMessage());
         }
         return properties;
+    }
+
+    public void tearBrowser() {
+        page.context().browser().close();
     }
 }
