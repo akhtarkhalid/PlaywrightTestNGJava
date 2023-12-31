@@ -17,9 +17,11 @@ public class PlaywrightFactory {
 
     public Page initBrowser(Properties properties) {
         String browserName = properties.getProperty("browser").trim();
+        boolean headLess =Boolean.parseBoolean(properties.getProperty("headless"));
         if (page == null) {
             playwright = Playwright.create();
-            launchOptions.setHeadless(false);
+            if(!headLess)
+                launchOptions.setHeadless(false);
             if (browserName.equalsIgnoreCase("chrome"))
                 launchOptions.setChannel("chrome");
             else if (browserName.equalsIgnoreCase("edge"))
