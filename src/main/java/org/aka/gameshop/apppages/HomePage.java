@@ -1,4 +1,4 @@
-package org.aka.gameshop.factory.pages;
+package org.aka.gameshop.apppages;
 
 import com.microsoft.playwright.Page;
 
