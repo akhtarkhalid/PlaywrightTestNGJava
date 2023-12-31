@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 
-public class PlaywrightFactory {
+public class BroFactory {
     Playwright playwright;
     Browser browser;
     BrowserContext browserContext;
