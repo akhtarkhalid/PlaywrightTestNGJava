@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="login page tests">
+
+<suite name="All Test Suite" thread-count="2" parallel="tests" verbose="3">
+    <test preserve-order="true" name="login page tests">
         <classes>
-            <class name="org.aka.gameshop.tests.HomePageTest">
+            <class name="org.aka.gameshop.tests.HomePageTest" />
+        </classes>
+    </test>
 <!--                <methods>-->
 <!--                    <include name="ahomeTitleTest"/>-->
 <!--                    <include name="bhomeURLTest"/>-->
 <!--                    <include name="chomeSearchTest"/>-->
 <!--                </methods>-->
-            </class>
-            <class name="org.aka.gameshop.tests.SignInPageTest"></class>
+    <test name="Sign-In Page tests">
+        <classes>
+            <class name="org.aka.gameshop.tests.SignInPageTest"/>
         </classes>
     </test>
 </suite>

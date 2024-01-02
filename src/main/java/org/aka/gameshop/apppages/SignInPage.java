@@ -29,9 +29,10 @@ public class SignInPage {
         this.page= page;
     }
 
-    public boolean isSignInPageVisible(){
-        System.out.println(page.title());
-        return page.title().contains(AppData.SIGN_IN_PAGE_TITLE);
+    public boolean isUserONSignInPage(){
+        //System.out.println(page.title());
+        //return page.title().contains(AppData.SIGN_IN_PAGE_TITLE);
+        return page.locator(pageTitle).isVisible();
     }
     public void clickSignIn(){
         page.locator(signINPButton).click();

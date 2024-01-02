@@ -12,7 +12,7 @@ public class SignInPageTest extends BaseTest {
         if (homePage==null)
             setupBrowser();
         signInPage= homePage.gotoSignInPage();
-        boolean signInPageVisible = signInPage.isSignInPageVisible();
+        boolean signInPageVisible = signInPage.isUserONSignInPage();
         if (signInPageVisible)
             System.out.println("Navigated to Sign-In page successfully...");
         else
