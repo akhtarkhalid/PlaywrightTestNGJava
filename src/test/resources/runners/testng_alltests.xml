@@ -10,6 +10,7 @@
 <!--                    <include name="chomeSearchTest"/>-->
 <!--                </methods>-->
             </class>
+            <class name="org.aka.gameshop.tests.SignInPageTest"></class>
         </classes>
     </test>
 </suite>

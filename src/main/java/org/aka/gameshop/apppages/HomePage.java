@@ -1,6 +1,8 @@
 package org.aka.gameshop.apppages;
 
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
+import org.aka.gameshop.appData.AppData;
 
 public class HomePage {
     private Page page;
@@ -11,6 +13,7 @@ public class HomePage {
     private String searchButton = "input#ctl00_ibSearch";
     private String searchPageHeader = "span#searchKeyC";
     private String subscriptionToast = "button#onesignal-slidedown-cancel-button";
+    private String signedInText = "//span[@id='ctl00_lblSIGNIN' and contains(text(),'Hi')]";
     public HomePage(Page page){
         this.page=page;
     }
@@ -38,8 +41,20 @@ public class HomePage {
 
     }
 
+    public SignInPage gotoSignInPage(){
+        page.click(signInButton);
+        page.waitForLoadState(AppData.idleLoadState);
+        System.out.println("Clicked on Sign-In button");
+        return new SignInPage(page);
+
+    }
     public void closeSubscriptionToast(){
         if(page.locator(subscriptionToast).isVisible())
             page.click(subscriptionToast);
     }
+
+    public boolean isUserSignedIn(){
+        return page.isVisible(signedInText);
+    }
+
 }

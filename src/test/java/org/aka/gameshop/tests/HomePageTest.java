@@ -9,21 +9,20 @@ import org.testng.annotations.Test;
 public class HomePageTest extends BaseTest {
 
 
-    @Test
+    @Test(priority = 1)
+    public void homeURLTest(){
+        String homePageURL = homePage.getHomePageURL();
+        System.out.printf("Home page url is %s",homePageURL );
+        Assert.assertEquals(homePageURL,prop.getProperty("url"));
+    }
+    @Test(priority = 2)
     public void homeTitleTest(){
         String homePageTitle = homePage.getHomePageTitle();
         System.out.printf("Home page title is %s",homePageTitle );
         Assert.assertTrue(homePageTitle.contains(AppData.HOME_PAGE_TITLE));
     }
 
-    @Test
-    public void homeURLTest(){
-        String homePageURL = homePage.getHomePageURL();
-        System.out.printf("Home page url is %s",homePageURL );
-        Assert.assertEquals(homePageURL,prop.getProperty("url"));
-    }
-
-    @Test(dataProvider = "getSearchData" )
+    @Test(dataProvider = "getSearchData",priority = 3)
     public void homeSearchTest(String productName){
         String searchResult = homePage.searchForProduct(productName);
         System.out.printf("Searching for product %s",searchResult );
