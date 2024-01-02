@@ -1,7 +1,6 @@
 package org.aka.gameshop.tests;
 
-import org.aka.gameshop.appData.AppData;
-import org.aka.gameshop.apppages.SignInPage;
+
 import org.aka.gameshop.base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -13,11 +12,12 @@ public class SignInPageTest extends BaseTest {
         if (homePage==null)
             setupBrowser();
         signInPage= homePage.gotoSignInPage();
-        if (signInPage.isSignInPageVisible())
+        boolean signInPageVisible = signInPage.isSignInPageVisible();
+        if (signInPageVisible)
             System.out.println("Navigated to Sign-In page successfully...");
         else
             System.out.println("Navigation to Sign-In failed...");
-        Assert.assertTrue(signInPage.isSignInPageVisible());
+        Assert.assertTrue(signInPageVisible);
     }
 
     @Test(testName="Verify that user see error when clicking on Sign-In after only entering email",

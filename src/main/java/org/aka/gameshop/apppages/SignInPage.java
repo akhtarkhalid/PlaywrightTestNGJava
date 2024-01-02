@@ -1,12 +1,9 @@
 package org.aka.gameshop.apppages;
 
-import com.microsoft.playwright.ElementHandle;
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.LoadState;
 import org.aka.gameshop.appData.AppData;
-
-import java.security.spec.ECField;
 
 public class SignInPage {
     private Page page;
@@ -34,6 +31,7 @@ public class SignInPage {
     }
 
     public boolean isSignInPageVisible(){
+        System.out.println(page.title());
         return page.title().contains(AppData.SIGN_IN_PAGE_TITLE);
     }
     public String getSignInPageButton(){

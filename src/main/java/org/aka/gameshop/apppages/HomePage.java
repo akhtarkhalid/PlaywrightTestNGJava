@@ -1,7 +1,6 @@
 package org.aka.gameshop.apppages;
 
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.LoadState;
 import org.aka.gameshop.appData.AppData;
 
 public class HomePage {
@@ -43,8 +42,8 @@ public class HomePage {
 
     public SignInPage gotoSignInPage(){
         page.click(signInButton);
-        page.waitForLoadState(AppData.idleLoadState);
         System.out.println("Clicked on Sign-In button");
+        page.waitForLoadState(AppData.idleLoadState);
         return new SignInPage(page);
 
     }
