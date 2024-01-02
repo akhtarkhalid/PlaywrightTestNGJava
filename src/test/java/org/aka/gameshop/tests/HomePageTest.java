@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 public class HomePageTest extends BaseTest {
 
 
-    @Test(priority = 1)
+    @Test(testName = "Check if the URL of ",priority = 1)
     public void homeURLTest(){
         String homePageURL = homePage.getHomePageURL();
         System.out.printf("Home page url is %s",homePageURL );

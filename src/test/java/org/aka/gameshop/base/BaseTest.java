@@ -3,7 +3,7 @@ package org.aka.gameshop.base;
 import com.microsoft.playwright.Page;
 import org.aka.gameshop.apppages.SignInPage;
 import org.aka.gameshop.factory.BroFactory;
-import org.aka.gameshop.apppages.HomePage;
+import org.aka.gameshop.apppages.HomeHeaderPage;
 import org.testng.annotations.*;
 
 import java.util.Properties;
@@ -12,7 +12,7 @@ public class BaseTest {
     BroFactory playFactory;
     Page page;
     protected Properties prop;
-    protected HomePage homePage;
+    protected HomeHeaderPage homePage;
     protected SignInPage signInPage;
 
     @BeforeTest
@@ -20,8 +20,7 @@ public class BaseTest {
         playFactory = new BroFactory();
         prop = playFactory.rtEnvSetup();
         page = playFactory.initBrowser(prop);
-        homePage = new HomePage(page);
-        signInPage = new SignInPage(page);
+        homePage = new HomeHeaderPage(page);
     }
 
     @AfterTest

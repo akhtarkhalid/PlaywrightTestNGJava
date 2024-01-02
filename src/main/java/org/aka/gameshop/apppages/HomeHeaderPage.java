@@ -3,7 +3,7 @@ package org.aka.gameshop.apppages;
 import com.microsoft.playwright.Page;
 import org.aka.gameshop.appData.AppData;
 
-public class HomePage {
+public class HomeHeaderPage {
     private Page page;
 
 
@@ -13,7 +13,7 @@ public class HomePage {
     private String searchPageHeader = "span#searchKeyC";
     private String subscriptionToast = "button#onesignal-slidedown-cancel-button";
     private String signedInText = "//span[@id='ctl00_lblSIGNIN' and contains(text(),'Hi')]";
-    public HomePage(Page page){
+    public HomeHeaderPage(Page page){
         this.page=page;
     }
 

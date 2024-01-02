@@ -27,17 +27,12 @@ public class SignInPage {
 
     public SignInPage(Page page){
         this.page= page;
-            //isVisibleOptions.wait(5000);
     }
 
     public boolean isSignInPageVisible(){
         System.out.println(page.title());
         return page.title().contains(AppData.SIGN_IN_PAGE_TITLE);
     }
-    public String getSignInPageButton(){
-        return page.textContent(pageTitle);
-    }
-
     public void clickSignIn(){
         page.locator(signINPButton).click();
         System.out.println("Clicked on Sign-in button");
@@ -60,11 +55,11 @@ public class SignInPage {
         System.out.printf("Password %s entered in Password text box",password);
     }
 
-    public HomePage userSignIn(String username,String password){
+    public HomeHeaderPage userSignIn(String username, String password){
         enterEmail(username);
         enterPassword(password);
         clickSignIn();
-        return new HomePage(page);
+        return new HomeHeaderPage(page);
     }
     public boolean isEmailNotExistMSGVisible(){
         Locator emailNotExistMSGL = page.getByText(emailNotExistMSG);
