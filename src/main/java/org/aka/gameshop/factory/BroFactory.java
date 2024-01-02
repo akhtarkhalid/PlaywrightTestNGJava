@@ -15,11 +15,31 @@ public class BroFactory {
     Properties properties;
     BrowserType.LaunchOptions launchOptions = new BrowserType.LaunchOptions();
 
+    private static ThreadLocal<Playwright> localPlaywright = new ThreadLocal<>();
+    private static ThreadLocal<Browser> localBrowser = new ThreadLocal<>();
+    private static ThreadLocal<BrowserContext> localBrowserContext = new ThreadLocal<>();
+    private static ThreadLocal<Page> localPage = new ThreadLocal<>();
+
+    public static Playwright getPlaywright(){
+        return localPlaywright.get();
+    }
+    public static Browser getBrowser(){
+        return localBrowser.get();
+    }
+    public static BrowserContext getBrowserContext(){
+        return localBrowserContext.get();
+    }
+    public static Page getPage(){
+        return localPage.get();
+    }
+
+
     public Page initBrowser(Properties properties) {
         String browserName = properties.getProperty("browser").trim();
         boolean headLess =Boolean.parseBoolean(properties.getProperty("headless"));
-        if (page == null) {
-            playwright = Playwright.create();
+        if (getPage() == null) {
+            //playwright = Playwright.create();
+            localPlaywright.set(Playwright.create());
             if(!headLess)
                 launchOptions.setHeadless(false);
             if (browserName.equalsIgnoreCase("chrome"))
@@ -28,18 +48,22 @@ public class BroFactory {
                 launchOptions.setChannel("edge");
 
             browser = switch (browserName.toLowerCase()) {
-                case "chromium" -> playwright.chromium().launch(launchOptions);
-                case "firefox" -> playwright.firefox().launch(launchOptions);
-                case "safari" -> playwright.webkit().launch(launchOptions);
-                case "chrome" -> playwright.chromium().launch(launchOptions);
-                case "edge" -> playwright.chromium().launch(launchOptions);
+                case "chromium" -> getPlaywright().chromium().launch(launchOptions);
+                case "firefox" -> getPlaywright().firefox().launch(launchOptions);
+                case "safari" -> getPlaywright().webkit().launch(launchOptions);
+                case "chrome" -> getPlaywright().chromium().launch(launchOptions);
+                case "edge" -> getPlaywright().chromium().launch(launchOptions);
                 default -> throw new IllegalStateException("Unexpected value: " + browser);
             };
-            browserContext = browser.newContext();
-            page = browserContext.newPage();
-            page.navigate(properties.getProperty("url").trim());
+            localBrowser.set(browser);
+            //browserContext = browser.newContext();
+            localBrowserContext.set(getBrowser().newContext());
+            //page = browserContext.newPage();
+            localPage.set(getBrowserContext().newPage());
+            getPage().navigate(properties.getProperty("url").trim());
+            //page.navigate(properties.getProperty("url").trim());
         }
-        return page;
+        return getPage();
 
     }
 
