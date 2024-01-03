@@ -11,6 +11,8 @@ public class HomePageTest extends BaseTest {
 
     @Test(testName = "Check if the URL of ",priority = 1)
     public void homeURLTest(){
+//        if (homePage==null)
+//            setupBrowser();
         String homePageURL = homePage.getHomePageURL();
         System.out.printf("Home page url is %s",homePageURL );
         Assert.assertEquals(homePageURL,prop.getProperty("url"));

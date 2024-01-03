@@ -37,7 +37,6 @@ public class BroFactory {
     public Page initBrowser(Properties properties) {
         String browserName = properties.getProperty("browser").trim();
         boolean headLess =Boolean.parseBoolean(properties.getProperty("headless"));
-        if (getPage() == null) {
             //playwright = Playwright.create();
             localPlaywright.set(Playwright.create());
             if(!headLess)
@@ -62,8 +61,8 @@ public class BroFactory {
             localPage.set(getBrowserContext().newPage());
             getPage().navigate(properties.getProperty("url").trim());
             //page.navigate(properties.getProperty("url").trim());
-        }
-        return getPage();
+
+        return localPage.get();
 
     }
 
