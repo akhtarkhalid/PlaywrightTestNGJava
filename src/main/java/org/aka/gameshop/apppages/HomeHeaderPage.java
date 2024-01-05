@@ -41,11 +41,14 @@ public class HomeHeaderPage {
     }
 
     public SignInPage gotoSignInPage(){
-        page.click(signInButton);
-        System.out.println("Clicked on Sign-In button");
-        page.waitForLoadState(AppData.idleLoadState);
+        try {
+            page.locator(signInButton).click();
+            System.out.println("Clicked on Sign-In button");
+            page.waitForSelector("//div[@id='body']//div[@class='cls-main-heading']");
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
         return new SignInPage(page);
-
     }
     public void closeSubscriptionToast(){
         if(page.locator(subscriptionToast).isVisible())

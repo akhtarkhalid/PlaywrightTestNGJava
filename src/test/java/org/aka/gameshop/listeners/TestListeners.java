@@ -20,7 +20,7 @@ public class TestListeners implements ITestListener {
 
     ExtentReports extentReports = Utils.getReporter();
     ExtentTest extentTest;
-
+    ThreadLocal<ExtentTest> localTest = new ThreadLocal<>();
     @Override
     public void onTestStart(ITestResult result) {
         String testName ="";
@@ -32,14 +32,12 @@ public class TestListeners implements ITestListener {
             testName = "Test name missing for method :"+method.getName();
         }
         extentTest = extentReports.createTest(testName);
+        localTest.set(extentTest);
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        extentTest.log(Status.PASS,"Test Passed");
-        System.out.println("Result Attributes are");
-        Field[] myField= result.getTestClass().getRealClass().getFields();
-        System.out.println(Arrays.toString(myField));
+        localTest.get().log(Status.PASS,"Test Passed");
 //        Page listenerPage;
 //        try {
 //           listenerPage = (Page)result.getTestClass().getRealClass().getField("Page").get(result.getInstance());
@@ -51,7 +49,7 @@ public class TestListeners implements ITestListener {
 
     @Override
     public void onTestFailure(ITestResult result) {
-        extentTest.fail(result.getThrowable());
+        localTest.get().fail(result.getThrowable());
     }
 
     // Other methods of ITestListener
