@@ -37,7 +37,8 @@ public class SignInPageTest extends BaseTest {
         //signInPage= homePage.gotoSignInPage();
         signInPage.enterEmail(prop.getProperty("username"));
         signInPage.clickSignIn();
-        Assert.assertTrue(signInPage.isPassErrorVisible());
+        Assert.fail("Deliberate Fail");
+       // Assert.assertTrue(signInPage.isPassErrorVisible());
     }
 
     @TestName("Verify that user see error when clicking on Sign-In after only entering password")

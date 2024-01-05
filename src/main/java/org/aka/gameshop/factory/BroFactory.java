@@ -4,7 +4,12 @@ import com.microsoft.playwright.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.util.Base64;
 import java.util.Properties;
+
+import static org.aka.gameshop.factory.Utils.rtEnvSetup;
 
 
 public class BroFactory {
@@ -66,7 +71,14 @@ public class BroFactory {
 
     }
 
+    public static String takeScreenshot(String testName) {
+        Properties properties = rtEnvSetup();
+        String path = System.getProperty("user.dir") + properties.getProperty("reportLocation")+ LocalDate.now()+"/screenshot/"+testName+System.currentTimeMillis()+ ".png";
+        byte[] buffer = getPage().screenshot(new Page.ScreenshotOptions().setPath(Paths.get(path)).setFullPage(false));
+        String base64Path = Base64.getEncoder().encodeToString(buffer);
 
+        return base64Path;
+    }
 
     public void tearBrowser() {
         page.context().browser().close();

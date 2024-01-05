@@ -27,16 +27,18 @@ public class HomePageTest extends BaseTest {
     public void homeURLTest() {
         String homePageURL = homePage.getHomePageURL();
         System.out.printf("Home page url is %s", homePageURL);
-        Assert.assertEquals(homePageURL, prop.getProperty("url"));
+        Assert.fail("Deliberate fail");
+        //Assert.assertEquals(homePageURL, prop.getProperty("url"));
     }
 
-    @TestName("Verify that search functionality is working fine for")
+    @TestName("Verify that search functionality is working fine")
     @Test(dataProvider = "getSearchData", priority = 3)
     public void homeSearchTest(String productName) {
         String searchResult = homePage.searchForProduct(productName);
         System.out.printf("Searching for product %s", searchResult);
+      //  Assert.fail("Test For Screenshot");
         Assert.assertTrue(searchResult.contains(productName), "Search Result: " + searchResult
-                + "\nExpected to contain :" + productName);
+                             + "\nExpected to contain :" + productName);
     }
 
     @DataProvider
