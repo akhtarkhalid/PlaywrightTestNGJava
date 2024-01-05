@@ -4,10 +4,12 @@ package org.aka.gameshop.apppages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import org.aka.gameshop.appData.AppData;
+import org.aka.gameshop.factory.Utils;
+import org.testng.Assert;
 
 public class SignInPage {
     private Page page;
-    private String pageTitle = "//div[contains(text(),'LOGIN TO YOUR')]";
+    private String pageTitle = "//div[@id='body']//div[@class='cls-main-heading']";
     private String emailInput = "input#ctl00_ContentPlaceHolder1_txtEmail";
     private String passwordInput = "input#ctl00_ContentPlaceHolder1_txtPassword";
     private String signINPButton = "input#ctl00_ContentPlaceHolder1_btnSubmit";
@@ -21,6 +23,7 @@ public class SignInPage {
 
     private String loginPopupTable = "#LightBoxTable";
     private String loginPopupOKButton = "OK";
+
    // private Page.IsVisibleOptions isVisibleOptions = new Page.IsVisibleOptions();
 
 
@@ -34,6 +37,13 @@ public class SignInPage {
         //return page.title().contains(AppData.SIGN_IN_PAGE_TITLE);
         return page.locator(pageTitle).isVisible();
     }
+
+    public String getSignInPageTitle(){
+        String title = page.title();
+        System.out.printf("Sign-In Page Title is - %s",title);
+        return title;
+    }
+
     public void clickSignIn(){
         page.locator(signINPButton).click();
         System.out.println("Clicked on Sign-in button");

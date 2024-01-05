@@ -12,7 +12,7 @@ public class BroFactory {
     Browser browser;
     BrowserContext browserContext;
     Page page;
-    Properties properties;
+
     BrowserType.LaunchOptions launchOptions = new BrowserType.LaunchOptions();
 
     private static ThreadLocal<Playwright> localPlaywright = new ThreadLocal<>();
@@ -34,9 +34,9 @@ public class BroFactory {
     }
 
 
-    public Page initBrowser(Properties properties) {
-        String browserName = properties.getProperty("browser").trim();
-        boolean headLess =Boolean.parseBoolean(properties.getProperty("headless"));
+    public Page initBrowser(Properties broproperties) {
+        String browserName = broproperties.getProperty("browser").trim();
+        boolean headLess =Boolean.parseBoolean(broproperties.getProperty("headless"));
             //playwright = Playwright.create();
             localPlaywright.set(Playwright.create());
             if(!headLess)
@@ -59,23 +59,14 @@ public class BroFactory {
             localBrowserContext.set(getBrowser().newContext());
             //page = browserContext.newPage();
             localPage.set(getBrowserContext().newPage());
-            getPage().navigate(properties.getProperty("url").trim());
+            getPage().navigate(broproperties.getProperty("url").trim());
             //page.navigate(properties.getProperty("url").trim());
 
-        return localPage.get();
+        return getPage();
 
     }
 
-    public Properties rtEnvSetup(){
-        try {
-            FileInputStream fi = new FileInputStream("./src/test/resources/configuration/runtime.properties");
-            properties = new Properties();
-            properties.load(fi);
-        }catch(IOException propLoadExcepion){
-            System.out.println(propLoadExcepion.getMessage());
-        }
-        return properties;
-    }
+
 
     public void tearBrowser() {
         page.context().browser().close();
