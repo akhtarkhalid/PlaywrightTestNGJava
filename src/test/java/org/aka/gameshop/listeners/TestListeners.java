@@ -56,6 +56,10 @@ public class TestListeners implements ITestListener {
 
     @Override
     public void onFinish(ITestContext context) {
+
+            System.out.println(("Test Suite is ending!"));
+        extentReports.flush();
+        localTest.remove();
         System.out.println("Test execution finished");
     }
 

@@ -25,7 +25,7 @@ public class Utils {
 
     public static ExtentReports getReporter() {
         Properties properties1 = rtEnvSetup();
-        String reportLocation = properties1.getProperty("reportLocation")+ LocalDate.now()+"/"+properties1.getProperty("reportName");
+        String reportLocation = System.getProperty("user.dir") + properties1.getProperty("reportLocation")+ LocalDate.now()+"/"+properties1.getProperty("reportName");
         System.out.println("Reports will be saved at : "+reportLocation);
         ExtentSparkReporter sparkReporter = new ExtentSparkReporter(reportLocation);
         sparkReporter.config().setReportName("Results for "+ LocalDate.now());
