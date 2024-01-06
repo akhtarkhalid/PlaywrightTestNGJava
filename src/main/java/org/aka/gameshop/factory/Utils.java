@@ -11,7 +11,8 @@ import java.time.LocalDate;
 import java.util.Properties;
 
 public class Utils {
-    public static final Logger logger = LoggerFactory.getLogger(Utils.class);
+    private static Properties properties;
+    public static final Logger logger = LoggerFactory.getLogger("tests");
 
     public static void printLogs(String message,Boolean isError){
         if(isError)
@@ -23,29 +24,43 @@ public class Utils {
             logger.info(message);
     }
 
-    public static ExtentReports getReporter() {
-        Properties properties1 = rtEnvSetup();
-        String reportLocation = System.getProperty("user.dir") + properties1.getProperty("reportLocation")+ LocalDate.now()+"/report/"+properties1.getProperty("reportName");
-        System.out.println("Reports will be saved at : "+reportLocation);
-        ExtentSparkReporter sparkReporter = new ExtentSparkReporter(reportLocation);
-        sparkReporter.config().setReportName("Results for "+ LocalDate.now());
-        sparkReporter.config().setDocumentTitle("GameTheShop automation test results");
 
-        ExtentReports extentReports = new ExtentReports();
-        extentReports.attachReporter(sparkReporter);
-        extentReports.setSystemInfo("Executed by: ",System.getProperty("user.name"));
-        extentReports.createTest(reportLocation);
+    public static ExtentReports getReporter() {
+        ExtentReports extentReports = new ExtentReports();;
+        try {
+            Properties properties1 = rtEnvSetup();
+            String reportLocation = System.getProperty("user.dir") + properties1.getProperty("reportLocation") + LocalDate.now() + "/report/" + properties1.getProperty("reportName");
+            printLogs("Reports will be saved at : " + reportLocation);
+            ExtentSparkReporter sparkReporter = new ExtentSparkReporter(reportLocation);
+            sparkReporter.config().setReportName("Results for " + LocalDate.now());
+            sparkReporter.config().setDocumentTitle("GameTheShop automation test results");
+            printLogs("Report Name and Title set successfully..");
+            extentReports.attachReporter(sparkReporter);
+            extentReports.setSystemInfo("Executed by: ", System.getProperty("user.name"));
+            extentReports.createTest(reportLocation);
+            printLogs("Report Test created successfully..");
+
+        }catch (Exception exception){
+            printLogs(exception.getMessage(),true);
+            printLogs("Error while initializing Extent Report..",true);
+        }
         return extentReports;
     }
 
     public static Properties rtEnvSetup(){
-        Properties properties = new Properties();
-        try {
-            FileInputStream fi = new FileInputStream("./src/test/resources/configuration/runtime.properties");
-            properties.load(fi);
-        }catch(IOException propLoadExcepion){
-            System.out.println(propLoadExcepion.getMessage());
-        }
+
+            try {
+                if(properties==null) {
+                    properties = new Properties();
+                    printLogs("Reading Properties file from [/src/test/resources/configuration/runtime.properties]..");
+                    FileInputStream fi = new FileInputStream("./src/test/resources/configuration/runtime.properties");
+                    properties.load(fi);
+                    printLogs("Properties loaded successfully..");
+                }
+            } catch (IOException propLoadExcepion) {
+                printLogs(propLoadExcepion.getMessage(), true);
+                printLogs("Error while loading Properties..", true);
+            }
         return properties;
     }
 }

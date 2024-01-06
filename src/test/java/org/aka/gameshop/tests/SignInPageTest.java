@@ -8,27 +8,38 @@ import org.testng.Assert;
 import org.aka.gameshop.factory.CustomAnnotations.*;
 import org.testng.annotations.Test;
 
+import static org.aka.gameshop.factory.Utils.printLogs;
+
 public class SignInPageTest extends BaseTest {
 
     @TestName("Verify if Sign-In link is working")
     @Test(priority = 5)
     public void userNavigationToSignInPageTest() {
-//        if (homePage==null)
-//            setupBrowser();
         signInPage = homePage.gotoSignInPage();
-        boolean signInPageVisible = signInPage.isUserONSignInPage();
-        Assert.assertTrue(signInPageVisible, "Navigate to Sign-In page failed...");
+        boolean testPass = signInPage.isUserONSignInPage();
+        if (testPass)
+            printLogs("Navigate to Sign-In page successful...");
+        else
+            printLogs("Navigate to Sign-In page failed...",true);
+
+        Assert.assertTrue(testPass);
     }
 
     @TestName("Verify that correct title is displayed for Home Page")
     @Test(priority = 10)
     public void signInTitleTest() {
         String signInPageTitle = signInPage.getSignInPageTitle();
-        System.out.printf("Home page title is %s", signInPageTitle);
-        Utils.printLogs("Home title printed successfully...");
-        Assert.assertTrue(signInPageTitle.contains(AppData.SIGN_IN_PAGE_TITLE), "Actual Title: " + signInPageTitle
-                + "\nExpected to contain :" + AppData.SIGN_IN_PAGE_TITLE);
+        printLogs("Sign In page title is "+ signInPageTitle);
 
+        boolean testPass = signInPageTitle.contains(AppData.SIGN_IN_PAGE_TITLE);
+
+        if(testPass)
+            printLogs("Home Page Title " + signInPageTitle+" is correct.");
+        else
+            printLogs("Sign-In Page title is not correct Actual Title: " + signInPageTitle
+                    + "\nExpected to contain :" + AppData.SIGN_IN_PAGE_TITLE,true);
+
+        Assert.assertTrue(testPass);
     }
 
     @TestName("Verify that user see error when clicking on Sign-In after only entering email")
@@ -36,9 +47,17 @@ public class SignInPageTest extends BaseTest {
     public void userSignInOnlyEmailTest() {
         //signInPage= homePage.gotoSignInPage();
         signInPage.enterEmail(prop.getProperty("username"));
+        printLogs("Username : "+ prop.getProperty("username")+" entered..");
         signInPage.clickSignIn();
-        Assert.fail("Deliberate Fail");
-       // Assert.assertTrue(signInPage.isPassErrorVisible());
+        printLogs("Clicked on Sign-In button successfully..");
+        boolean testPass = signInPage.isPassErrorVisible();
+
+        if(testPass)
+            printLogs("Expected message displayed to enter password..");
+        else
+            printLogs("Message not displayed to enter password..");
+
+        Assert.assertTrue(testPass);
     }
 
     @TestName("Verify that user see error when clicking on Sign-In after only entering password")
@@ -46,9 +65,18 @@ public class SignInPageTest extends BaseTest {
     public void userSignInOnlyPasswordTest() {
         //signInPage= homePage.gotoSignInPage();
         signInPage.enterEmail("");
+        printLogs("Deleted username from field..");
         signInPage.enterPassword(prop.getProperty("password"));
+        printLogs("Password : "+ prop.getProperty("password")+" entered..");
         signInPage.clickSignIn();
-        Assert.assertTrue(signInPage.isEmailErrorVisible());
+        printLogs("Clicked on Sign-In button successfully..");
+        boolean testPass = signInPage.isEmailErrorVisible();
+        if(testPass)
+            printLogs("Expected message displayed to enter Username..");
+        else
+            printLogs("Message not displayed to enter Username..");
+
+        Assert.assertTrue(testPass);
 
     }
 
@@ -57,9 +85,18 @@ public class SignInPageTest extends BaseTest {
     public void userSignInShortPasswordTest() {
         //homePage.gotoSignInPage();
         signInPage.enterEmail(prop.getProperty("username"));
+        printLogs("Username : "+ prop.getProperty("username")+" entered..");
         signInPage.enterPassword("Test1");
+        printLogs("Short password 'Test1' entered..");
         signInPage.clickSignIn();
-        Assert.assertTrue(signInPage.isPassLengthMSGVisible());
+        printLogs("Clicked on Sign-In button successfully..");
+        boolean testPass = signInPage.isPassLengthMSGVisible();
+        if(testPass)
+            printLogs("Expected message displayed to enter Username..");
+        else
+            printLogs("Message not displayed to enter Username..");
+
+        Assert.assertTrue(testPass);
 
     }
 
@@ -68,11 +105,18 @@ public class SignInPageTest extends BaseTest {
     public void userSignInUnregisteredEmailTest() {
         //homePage.gotoSignInPage();
         signInPage.enterEmail("exampleshop@bxm.com");
+        printLogs("Email exampleshop@bxm.com entered..");
         signInPage.enterPassword("Testdf1");
+        printLogs("Passwrod Testdf1 entered..");
         signInPage.clickSignIn();
-        boolean isMSGVisible = signInPage.isEmailNotExistMSGVisible();
+        printLogs("Clicked on Sign-In button successfully..");
+        boolean testPass = signInPage.isEmailNotExistMSGVisible();
         signInPage.clickPopupOK();
-        Assert.assertTrue(isMSGVisible);
+        if(testPass)
+            printLogs("Sign Up message displayed to user..");
+        else
+            printLogs("Sign Up message not displayed to user..");
+        Assert.assertTrue(testPass);
 
     }
 
@@ -81,22 +125,30 @@ public class SignInPageTest extends BaseTest {
     public void userSignInWrongPasswordTest() {
         //homePage.gotoSignInPage();
         signInPage.enterEmail(prop.getProperty("username"));
+        printLogs("Email "+prop.getProperty("username")+" entered..");
         signInPage.enterPassword("Testdf1");
+        printLogs("Passwrod Testdf1 entered..");
         signInPage.clickSignIn();
-        boolean isMSGVisible = signInPage.isLoginFailedMSGVisible();
+        printLogs("Clicked on Sign-In button successfully..");
+        boolean testPass = signInPage.isLoginFailedMSGVisible();
         signInPage.clickPopupOK();
-        Assert.assertTrue(isMSGVisible);
-
+        if(testPass)
+            printLogs("Login failed message displayed to user..");
+        else
+            printLogs("Login failed message not displayed to user..");
+        Assert.assertTrue(testPass);
     }
 
     @TestName("Verify that user is logged in successfully with valid credentials")
     @Test(priority = 40)
     public void userSignInCorrectEmailAndPasswordTest() {
+        printLogs("Signing in with Username: "+prop.getProperty("username")+ " and Password: "+prop.getProperty("password"));
         homePage = signInPage.userSignIn(prop.getProperty("username"), prop.getProperty("password"));
-        if (homePage.isUserSignedIn())
-            System.out.println("User Sign-In successful...");
+        boolean testPass = homePage.isUserSignedIn();
+        if(testPass)
+            printLogs("User Sign-In successful..");
         else
-            System.out.println("User Sign-In failed...");
-        Assert.assertTrue(homePage.isUserSignedIn());
+            printLogs("User Sign-In failed..");
+        Assert.assertTrue(testPass);
     }
 }

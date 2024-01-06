@@ -3,6 +3,8 @@ package org.aka.gameshop.apppages;
 import com.microsoft.playwright.Page;
 import org.aka.gameshop.appData.AppData;
 
+import static org.aka.gameshop.factory.Utils.printLogs;
+
 public class HomeHeaderPage {
     private Page page;
 
@@ -18,44 +20,50 @@ public class HomeHeaderPage {
     }
 
     public String getHomePageTitle(){
+        printLogs("Getting page title..");
         String title = page.title();
-        System.out.printf("Home Page Title is - %s",title);
         return title;
     }
 
     public String getHomePageURL(){
+        printLogs("Getting home page URL..");
         String url = page.url();
-        System.out.printf("Home Page URL is - %s",url);
         return url;
     }
 
     public String searchForProduct(String product){
         closeSubscriptionToast();
-        System.out.printf("Searching for - %s",product);
+        printLogs("Searching for "+ product);
         page.fill(searchInput,product);
         page.click(searchButton);
         String searchResult = page.textContent(searchPageHeader);
-        System.out.printf("Searched results are for - %s",searchResult);
+        printLogs("Searched results are for "+searchResult);
         return searchResult;
 
     }
 
     public SignInPage gotoSignInPage(){
         try {
+            printLogs("Navigating to Sign-In page button..");
             page.locator(signInButton).click();
-            System.out.println("Clicked on Sign-In button");
+            printLogs("Clicked on Sign-In button..");
             page.waitForSelector("//div[@id='body']//div[@class='cls-main-heading']");
         }catch(Exception e){
-            System.out.println(e.getMessage());
+            printLogs(e.getMessage(),true);
         }
         return new SignInPage(page);
     }
     public void closeSubscriptionToast(){
-        if(page.locator(subscriptionToast).isVisible())
+        printLogs("Checking for Subscribe now notification..");
+        if(page.locator(subscriptionToast).isVisible()) {
+            printLogs("Subscribe now notification present. Closing it..");
             page.click(subscriptionToast);
+            printLogs("Subscribe now notification closed.");
+        }
     }
 
     public boolean isUserSignedIn(){
+        printLogs("Checking is User is logged in..");
         return page.isVisible(signedInText);
     }
 

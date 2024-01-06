@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.Base64;
 import java.util.Properties;
 
+import static org.aka.gameshop.factory.Utils.printLogs;
 import static org.aka.gameshop.factory.Utils.rtEnvSetup;
 
 
@@ -43,6 +44,12 @@ public class BroFactory {
         String browserName = broproperties.getProperty("browser").trim();
         boolean headLess =Boolean.parseBoolean(broproperties.getProperty("headless"));
             //playwright = Playwright.create();
+            if (!headLess)
+                printLogs("Setting "+browserName+" in headed mode");
+            else
+                printLogs("Setting "+browserName+" in headless mode");
+
+
             localPlaywright.set(Playwright.create());
             if(!headLess)
                 launchOptions.setHeadless(false);
@@ -60,11 +67,15 @@ public class BroFactory {
                 default -> throw new IllegalStateException("Unexpected value: " + browser);
             };
             localBrowser.set(browser);
+            printLogs("Browser set successfully..");
             //browserContext = browser.newContext();
             localBrowserContext.set(getBrowser().newContext());
+            printLogs("Browser Context set successfully..");
             //page = browserContext.newPage();
             localPage.set(getBrowserContext().newPage());
             getPage().navigate(broproperties.getProperty("url").trim());
+            printLogs("New Page set and navigated to ["+broproperties.getProperty("url").trim()+"] successfully..");
+
             //page.navigate(properties.getProperty("url").trim());
 
         return getPage();
