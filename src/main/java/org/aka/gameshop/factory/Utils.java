@@ -16,15 +16,19 @@ public class Utils {
     private static Properties properties;
     public static final Logger logger = LoggerFactory.getLogger("tests");
 
+    public static final String RESET = "\u001B[0m";
+    public static final String RED = "\u001B[31m";
+    public static final String GREEN = "\u001B[32m";
+
     public static void printLogs(String message, Boolean isError) {
         if (isError)
-            logger.error(message);
+            logger.error(RED+message+RESET);
         else
-            logger.info(message);
+            logger.info(GREEN+message+RESET);
     }
 
     public static void printLogs(String message) {
-        logger.info(message);
+        logger.info(GREEN+message+RESET);
     }
 
 
