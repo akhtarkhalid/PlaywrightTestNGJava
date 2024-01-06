@@ -40,8 +40,8 @@ public class BaseTest {
 
     @AfterTest
     public void tearDown(){
-        page.context().browser().close();
-       // playFactory.tearBrowser();
+        //page.context().browser().close();
+       playFactory.tearBrowser();
     }
 
 

@@ -92,6 +92,12 @@ public class BroFactory {
     }
 
     public void tearBrowser() {
-        page.context().browser().close();
-    }
+        localPage.get().close();
+        printLogs("Closing Page..");
+        localBrowserContext.get().close();
+        printLogs("Closing Browser Context..");
+        localBrowser.get().close();
+        printLogs("Closing Browser..");
+        localPlaywright.get().close();
+        printLogs("Closing Playwright..");    }
 }
