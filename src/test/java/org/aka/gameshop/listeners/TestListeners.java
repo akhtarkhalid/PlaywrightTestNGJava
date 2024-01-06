@@ -18,6 +18,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
+import static org.aka.gameshop.factory.Utils.printLogs;
+
 public class TestListeners implements ITestListener {
 
     ExtentReports extentReports = Utils.getReporter();
@@ -31,15 +33,27 @@ public class TestListeners implements ITestListener {
         if (method.isAnnotationPresent(CustomAnnotations.TestName.class)) {
             CustomAnnotations.TestName testNameValue = method.getAnnotation(CustomAnnotations.TestName.class);
             testName = testNameValue.value();
+
         }else{
             testName="Test name missing for method :"+method.getName();
         }
+        printLogs(testName+" Started..");
         extentTest = extentReports.createTest(testName);
         localTest.set(extentTest);
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
+        String testName ="";
+        Method method = result.getMethod().getConstructorOrMethod().getMethod();
+        if (method.isAnnotationPresent(CustomAnnotations.TestName.class)) {
+            CustomAnnotations.TestName testNameValue = method.getAnnotation(CustomAnnotations.TestName.class);
+            testName = testNameValue.value();
+
+        }else{
+            testName="Test name missing for method :"+method.getName();
+        }
+        printLogs(testName+" Completed successrully..");
         localTest.get().log(Status.PASS," - Passed");
 //        Page listenerPage;
 //        try {
@@ -61,9 +75,9 @@ public class TestListeners implements ITestListener {
             testName="Test name missing for method :"+method.getName();
         }
 
-        System.out.println((" failed!"));
+        printLogs(testName+" Failed.. Adding screenshot to failed report.",true);
         localTest.get().fail(result.getThrowable(), MediaEntityBuilder.createScreenCaptureFromBase64String(BroFactory.takeScreenshot(testName),result.getMethod().getMethodName()).build());
-
+        printLogs("Screenshot added successfully..");
     }
 
     // Other methods of ITestListener
@@ -71,10 +85,11 @@ public class TestListeners implements ITestListener {
     @Override
     public void onFinish(ITestContext context) {
 
-            System.out.println(("Test Suite is ending!"));
+        printLogs("Test ended!.. Generating Report.. ");
         extentReports.flush();
+        printLogs("Report Generated successfully.. ");
         localTest.remove();
-        System.out.println("Test execution finished");
+        printLogs("Test execution finished!..");
     }
 
 }
