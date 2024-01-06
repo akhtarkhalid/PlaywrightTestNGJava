@@ -1,7 +1,9 @@
 package org.aka.gameshop.factory;
 
 import com.microsoft.playwright.*;
+import com.microsoft.playwright.options.ViewportSize;
 
+import java.awt.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -9,8 +11,7 @@ import java.time.LocalDate;
 import java.util.Base64;
 import java.util.Properties;
 
-import static org.aka.gameshop.factory.Utils.printLogs;
-import static org.aka.gameshop.factory.Utils.rtEnvSetup;
+import static org.aka.gameshop.factory.Utils.*;
 
 
 public class BroFactory {
@@ -57,7 +58,6 @@ public class BroFactory {
                 launchOptions.setChannel("chrome");
             else if (browserName.equalsIgnoreCase("edge"))
                 launchOptions.setChannel("edge");
-
             browser = switch (browserName.toLowerCase()) {
                 case "chromium" -> getPlaywright().chromium().launch(launchOptions);
                 case "firefox" -> getPlaywright().firefox().launch(launchOptions);
@@ -69,7 +69,7 @@ public class BroFactory {
             localBrowser.set(browser);
             printLogs("Browser set successfully..");
             //browserContext = browser.newContext();
-            localBrowserContext.set(getBrowser().newContext());
+            localBrowserContext.set(getBrowser().newContext(new Browser.NewContextOptions().setViewportSize(getScreenSize())));
             printLogs("Browser Context set successfully..");
             //page = browserContext.newPage();
             localPage.set(getBrowserContext().newPage());
