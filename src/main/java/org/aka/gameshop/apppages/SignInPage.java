@@ -61,14 +61,14 @@ public class SignInPage {
     public void enterEmail(String email){
         printLogs("Entering Email address..");
         page.locator(emailInput).fill(email);
-        printLogs("Email ["+email+"] entered.");
+        //printLogs("Email ["+email+"] entered.");
     }
 
 
     public void enterPassword(String password){
         printLogs("Entering password..");
         page.locator(passwordInput).fill(password);
-        printLogs("Password ["+password+"] entered.");
+        //printLogs("Password ["+password+"] entered.");
     }
 
     public HomeHeaderPage userSignIn(String username, String password){
