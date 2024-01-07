@@ -69,7 +69,8 @@ public class BroFactory {
             localBrowser.set(browser);
             printLogs("Browser set successfully..");
             //browserContext = browser.newContext();
-            localBrowserContext.set(getBrowser().newContext(new Browser.NewContextOptions().setViewportSize(getScreenSize())));
+            //localBrowserContext.set(getBrowser().newContext(new Browser.NewContextOptions().setViewportSize(getScreenSize())));
+            localBrowserContext.set(getBrowser().newContext());
             printLogs("Browser Context set successfully..");
             //page = browserContext.newPage();
             localPage.set(getBrowserContext().newPage());
