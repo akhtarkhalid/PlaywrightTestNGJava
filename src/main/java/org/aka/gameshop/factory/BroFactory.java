@@ -93,7 +93,7 @@ public class BroFactory {
 
     public static String takeScreenshot(String testName) {
         //Getting properties file for screenshot location and saving screenshot there
-        Properties properties = rtEnvSetup();
+        Properties properties = getProperties();
         String path = System.getProperty("user.dir") + properties.getProperty("reportLocation")+ LocalDate.now()+"/screenshot/"+testName+System.currentTimeMillis()+ ".png";
         byte[] buffer = getPage().screenshot(new Page.ScreenshotOptions().setPath(Paths.get(path)).setFullPage(false));
         String base64Path = Base64.getEncoder().encodeToString(buffer);

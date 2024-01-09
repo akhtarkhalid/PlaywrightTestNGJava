@@ -36,7 +36,7 @@ public class Utils {
         ExtentReports extentReports = new ExtentReports();
         ;
         try {
-            Properties properties1 = rtEnvSetup();
+            Properties properties1 = getProperties();
             String reportLocation = System.getProperty("user.dir") + properties1.getProperty("reportLocation") + LocalDate.now() + "/report/" + properties1.getProperty("reportName");
             printLogs("Reports will be saved at : " + reportLocation);
             ExtentSparkReporter sparkReporter = new ExtentSparkReporter(reportLocation);
@@ -55,12 +55,12 @@ public class Utils {
         return extentReports;
     }
 
-    public static Properties rtEnvSetup() {
+    public static Properties getProperties() {
 
         try {
             if (properties == null) {
                 properties = new Properties();
-                printLogs("Reading Properties file from [/src/test/resources/configuration/runtime.properties]..");
+                printLogs("Reading Properties file from \\src\\test\\resources\\configuration\\runtime.properties..");
                 FileInputStream fi = new FileInputStream("./src/test/resources/configuration/runtime.properties");
                 properties.load(fi);
                 printLogs("Properties loaded successfully..");
