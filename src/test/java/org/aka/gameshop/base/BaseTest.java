@@ -10,9 +10,10 @@ import org.apache.logging.log4j.core.LoggerContext;
 import org.testng.annotations.*;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.Properties;
 
-import static org.aka.gameshop.factory.Utils.printLogs;
+import static org.aka.gameshop.factory.Utils.*;
 
 public class BaseTest {
     BroFactory playFactory;
@@ -26,7 +27,7 @@ public class BaseTest {
     public void testSetup(){
         try{
         playFactory = new BroFactory();
-        prop = Utils.rtEnvSetup();
+        prop = getProperties();
         page = playFactory.initBrowser(prop);
         homePage = new HomeHeaderPage(page);
 
@@ -42,6 +43,7 @@ public class BaseTest {
     public void tearDown(){
         //page.context().browser().close();
        playFactory.tearBrowser();
+
     }
 
 

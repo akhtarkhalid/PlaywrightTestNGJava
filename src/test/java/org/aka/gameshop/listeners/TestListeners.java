@@ -16,8 +16,11 @@ import org.testng.annotations.Test;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Properties;
 
+import static org.aka.gameshop.factory.Utils.getProperties;
 import static org.aka.gameshop.factory.Utils.printLogs;
 
 public class TestListeners implements ITestListener {
@@ -90,6 +93,9 @@ public class TestListeners implements ITestListener {
         printLogs("Report Generated successfully.. ");
         localTest.remove();
         printLogs("Test execution finished!..");
+        Properties properties = getProperties();
+        printLogs("Report saved @ " + System.getProperty("user.dir") + properties.getProperty("reportLocation") + LocalDate.now() + "\\report\\" + properties.getProperty("reportName"));
+        printLogs("Logs saved @ " + System.getProperty("user.dir") + "\\PlaywrightTestNGJava\\gameshoplog.log");
     }
 
 }
